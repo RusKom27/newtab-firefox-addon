@@ -1,4 +1,12 @@
+@import "../../assets/fonts/fonts.css";
 
 .layout {
   display: flex;
+  font-family: "JetBrains Mono", sans-serif;
+  flex-direction: column;
+  height: 100dvh;
+  width: 100%;
+  background-image: url("../../assets/bg.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
 }

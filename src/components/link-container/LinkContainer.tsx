@@ -4,9 +4,10 @@ import styles from "./LinkContainer.module.scss";
 
 interface LinkContainerProps {
     children: React.ReactNode[] | React.ReactNode
+    name: string
 }
 
-const LinkContainer: React.FC<LinkContainerProps> = ({children}) => {
+const LinkContainer: React.FC<LinkContainerProps> = ({children, name}) => {
     return (
         <div className={styles.container}>
             {children}
