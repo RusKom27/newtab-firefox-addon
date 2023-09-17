@@ -1,39 +1,23 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useRef} from 'react';
 
 import styles from "./TabLink.module.scss";
+import {useTab} from "../../hooks";
 
 export interface TabLinkProps {
     children: React.ReactNode
     tab_link: string
 }
 
-const onMouseEnter = (event: MouseEvent) => {
+const TabLink: React.FC<TabLinkProps> = ({children, tab_link}) => {
+    const {currentTab, setTab} = useTab();
 
-};
-
-const onMouseMove = (event: MouseEvent) => {
-
-};
-
-
-const TabLink: React.FC<TabLinkProps> = ({children}) => {
     const ref = useRef<HTMLDivElement>(null);
 
-    useEffect(() => {
-        if (ref === null || ref.current === null) return;
-        ref.current.addEventListener(
-            "mouseenter",
-            (event) => onMouseEnter(event),
-        );
-        ref.current.addEventListener(
-            "mousemove",
-            (event) => onMouseMove(event),
-        );
-
-    });
-
     return (
-        <div ref={ref} className={styles.tab_link}>
+        <div
+            ref={ref}
+            className={currentTab === tab_link ? styles.tab_link_active : styles.tab_link}
+            onClick={() => setTab(tab_link)}>
             {children}
         </div>
     );

@@ -1,5 +1,15 @@
 .container {
   display: flex;
+  flex-direction: row;
   width: 100%;
   justify-content: stretch;
+  padding: 8px;
+  gap: 8px;
+}
+
+.controls {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  margin-left: auto;
 }
