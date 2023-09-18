@@ -1,0 +1,63 @@
+
+.dialog {
+  padding: 0;
+  background-color: transparent;
+  border: none;
+  outline: none;
+
+}
+
+.modal {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  position: relative;
+  align-items: center;
+  text-align: center;
+  font-weight: 700;
+  font-size: 16px;
+  border: 0.01rem solid #171717;
+  color: #171717;
+  background-color: rgba(240, 255, 255, 0.5);
+  backdrop-filter: blur(8px) invert(10%);
+  border-radius: 8px;
+  transition: 0.3s ease;
+  overflow: hidden;
+}
+
+.header {
+  height: 58px;
+  padding: 8px;
+  width: 100%;
+  background-color: rgba(240, 255, 255, 1);
+  box-shadow: 0 1px 8px #626262;
+}
+
+.container {
+  padding: 8px;
+}
+
+.close {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 8px;
+  padding: 8px;
+  right: 8px;
+  width: 42px;
+  height: 42px;
+}
+
+.close:hover {
+  cursor: pointer;
+}
+
+.close img {
+  width: 100%;
+  height: 100%;
+}
+
+dialog::backdrop {
+  background-color: rgba(0, 0, 0, 0.6);;
+}

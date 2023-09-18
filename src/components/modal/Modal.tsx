@@ -2,6 +2,8 @@ import { useEffect, useRef } from 'react';
 import { useClickAway } from 'react-use';
 import useModal from '../../hooks/useModal';
 
+import styles from "./Modal.module.scss";
+
 export default function Modal() {
     const modal = useModal();
     const modalRef = useRef<HTMLDialogElement>(null);
@@ -25,22 +27,20 @@ export default function Modal() {
 
     return (
         <dialog
-            style={{
-                padding: 0,
-            }}
+            className={styles.dialog}
             ref={modalRef}
         >
             <div
-                style={{
-                    padding: '1rem',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '1rem',
-                }}
+                className={styles.modal}
                 ref={modalContentRef}
             >
-                <div>{modal.children}</div>
-                <button onClick={modal.close}>X</button>
+                <div className={styles.header}>
+                    {modal.title}
+                </div>
+                <div className={styles.container}>{modal.children}</div>
+                <button className={styles.close} onClick={modal.close}>
+                    <img src="../../../src/assets/cross.png" alt=""/>
+                </button>
             </div>
         </dialog>
     );

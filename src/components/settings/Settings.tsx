@@ -5,6 +5,7 @@ import {ReactComponent as SettingsIcon} from '../../assets/settings.svg';
 
 import styles from "./Settings.module.scss";
 import useModal from "../../hooks/useModal.ts";
+import SettingsWindow from "./SettingsWindow.tsx";
 
 export interface SettingsProps {
 
@@ -16,7 +17,10 @@ const Settings: React.FC<SettingsProps> = () => {
 
     const onClickHandler = () => {
         modal.setChildren(
-            <div>Settings</div>,
+            <SettingsWindow/>,
+        );
+        modal.setTitle(
+            "Settings",
         );
         modal.open();
     };
@@ -30,4 +34,5 @@ const Settings: React.FC<SettingsProps> = () => {
         </div>
     );
 };
+
 export default Settings;

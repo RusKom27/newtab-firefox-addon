@@ -7,7 +7,7 @@ interface LinkContainerProps {
     name: string
 }
 
-const LinkContainer: React.FC<LinkContainerProps> = ({children, name}) => {
+const LinkContainer: React.FC<LinkContainerProps> = ({children}) => {
     return (
         <div className={styles.container}>
             {children}

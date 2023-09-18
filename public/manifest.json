@@ -1,0 +1,40 @@
+{
+  "manifest_version": 2,
+  "name": "NewTab by RusKom",
+  "version": "1.1",
+  "description": "NewTab addon for Firefox by RusKom",
+
+  "browser_action": {
+    "default_icon": "favicon.ico"
+  },
+
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    }
+  ],
+
+  "applications": {
+    "gecko": {
+      "strict_min_version": "54.0"
+    }
+  },
+  
+  "chrome_settings_overrides": {
+    "homepage": "index.html"
+  },
+
+  "chrome_url_overrides": {
+    "newtab": "index.html"
+  },
+
+
+  "permissions": [
+    "activeTab",
+    "https://ajax.googleapis.com/",
+    "geolocation",
+    "storage"
+  ]
+}
