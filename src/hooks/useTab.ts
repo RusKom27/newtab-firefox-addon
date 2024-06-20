@@ -1,41 +1,97 @@
-import { create } from 'zustand';
+import {create} from 'zustand';
+import Tab from "../types/Tab.ts";
 
 const LOCAL_CURRENT_TAB_KEY = "current_tab";
 const LOCAL_TABS_LIST_KEY = "tabs";
 
-const getLocalCurrentTab = ():string => {
-    return localStorage.getItem(LOCAL_CURRENT_TAB_KEY) || "main";
+const getLocalCurrentTab = ():Tab => {
+
+    const currentTab = localStorage.getItem(LOCAL_CURRENT_TAB_KEY);
+
+    if (!currentTab) {
+
+        const newCurrentTab = getLocalTabsList()[0] || createTab("main");
+
+        localStorage.setItem(LOCAL_CURRENT_TAB_KEY, JSON.stringify(newCurrentTab));
+        return newCurrentTab;
+    }
+    
+    return JSON.parse(currentTab);
+
+
+
 };
 
-const getLocalTabsList = (): string[] => {
-    return JSON.parse(localStorage.getItem(LOCAL_TABS_LIST_KEY) || JSON.stringify(['main']));
+const setLocalCurrentTab = (tab: Tab) => {
+    localStorage.setItem(LOCAL_CURRENT_TAB_KEY, JSON.stringify(tab));
+};
+
+const getLocalTabsList = (): Tab[] => {
+    return JSON.parse(localStorage.getItem(LOCAL_TABS_LIST_KEY) || JSON.stringify([createTab("main")]));
+};
+
+const setLocalTabsList = (tabs: Tab[]) => {
+    localStorage.setItem(LOCAL_TABS_LIST_KEY, JSON.stringify(tabs));
+};
+
+const createTab = (tabName: string): Tab => {
+    return {
+        name: tabName,
+        linksContainers: [],
+    };
 };
 
 interface TabState {
-    currentTab: string,
-    tabs: string[],
+    currentTab: Tab,
+    tabs: Tab[],
     setTab: (newTab:string) => void,
     createTab: (tabName:string) => void,
     removeTab: (tabName:string) => void,
 }
 
 const useTab = create<TabState>((set) => ({
-    currentTab: getLocalCurrentTab(),
+
+    currentTab:
+        getLocalTabsList().filter(item => item.name === getLocalCurrentTab().name)[0]
+        || getLocalTabsList()[0]
+        || createTab("main"),
     tabs: getLocalTabsList(),
-    setTab: (newTab) => {
-        localStorage.setItem(LOCAL_CURRENT_TAB_KEY, newTab);
-        set(() => ({
-            currentTab: newTab,
-        }));
+    setTab: (newTab: string) => {
+
+        set((state: TabState) => {
+
+            const tab = state.tabs.filter(item => item.name === newTab)[0];
+
+            if (!tab) {
+                return {
+                    currentTab: state.currentTab,
+                };
+            }
+
+            setLocalCurrentTab(tab);
+
+            return {
+                currentTab: tab,
+            };
+        });
     },
     createTab: (tabName: string) => {
         set((state: TabState) => {
+
+
+            if (state.tabs.filter(item => item.name === tabName).length > 0) {
+                return {
+                    tabs: state.tabs,
+                };
+            }
+            const tab = createTab(tabName);
+
             const tabs = [
                 ...state.tabs,
-                tabName,
+                tab,
             ];
 
-            localStorage.setItem(LOCAL_TABS_LIST_KEY, JSON.stringify(tabs));
+            setLocalTabsList(tabs);
             return {
                 tabs,
             };
@@ -43,9 +99,14 @@ const useTab = create<TabState>((set) => ({
     },
     removeTab: (tabName: string) => {
         set((state: TabState) => {
-            const tabs = state.tabs.filter(tab => tab !== tabName);
+            const tabs = state.tabs.filter(tab => tab.name !== tabName);
 
-            localStorage.setItem(LOCAL_TABS_LIST_KEY, JSON.stringify(tabs));
+            if (tabName === state.currentTab.name) {
+                setLocalCurrentTab(tabs[0]);
+            }
+
+            setLocalTabsList(tabs);
+
             return {
                 tabs,
             };

@@ -1,16 +1,17 @@
 import React from 'react';
 
 import styles from "./LinkContainer.module.scss";
+import {Link} from "../index.ts";
 
 interface LinkContainerProps {
-    children: React.ReactNode[] | React.ReactNode
     name: string
 }
 
-const LinkContainer: React.FC<LinkContainerProps> = ({children}) => {
+const LinkContainer: React.FC<LinkContainerProps> = ({name}) => {
+
     return (
         <div className={styles.container}>
-            {children}
+            <Link href={"https://www.youtube.com/"}>YouTube</Link>
         </div>
     );
 };

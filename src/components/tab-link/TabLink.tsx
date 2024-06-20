@@ -16,7 +16,7 @@ const TabLink: React.FC<TabLinkProps> = ({children, tab_link}) => {
     return (
         <div
             ref={ref}
-            className={currentTab === tab_link ? styles.tab_link_active : styles.tab_link}
+            className={currentTab.name === tab_link ? styles.tab_link_active : styles.tab_link}
             onClick={() => setTab(tab_link)}>
             {children}
         </div>
