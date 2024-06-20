@@ -1,5 +1,6 @@
 import React from 'react';
 import {useTab} from "../../hooks";
+import {LinkContainer} from "../index.ts";
 
 export interface TabPageProps {
 
@@ -10,7 +11,10 @@ const TabPage: React.FC<TabPageProps> = () => {
 
     return (
         <div>
-            {currentTab.name}
+            {currentTab.linksContainers.map(
+                linksContainer =>
+                    <LinkContainer key={linksContainer.name} container={linksContainer}/>,
+            )}
         </div>
     );
 };

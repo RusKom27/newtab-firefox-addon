@@ -15,4 +15,4 @@ type Tab = {
     linksContainers: LinksContainer[]
 }
 
-export default Tab;
+export type {Tab, Link, LinksContainer};

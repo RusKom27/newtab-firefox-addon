@@ -1,5 +1,5 @@
 import {create} from 'zustand';
-import Tab from "../types/Tab.ts";
+import {Tab, Link, LinksContainer} from "../types/Tab.ts";
 
 const LOCAL_CURRENT_TAB_KEY = "current_tab";
 const LOCAL_TABS_LIST_KEY = "tabs";
@@ -27,7 +27,11 @@ const setLocalCurrentTab = (tab: Tab) => {
 };
 
 const getLocalTabsList = (): Tab[] => {
-    return JSON.parse(localStorage.getItem(LOCAL_TABS_LIST_KEY) || JSON.stringify([createTab("main")]));
+    const tabs = JSON.parse(localStorage.getItem(LOCAL_TABS_LIST_KEY) || JSON.stringify([createTab("main")]));
+
+    setLocalTabsList(tabs);
+
+    return tabs;
 };
 
 const setLocalTabsList = (tabs: Tab[]) => {
@@ -37,7 +41,14 @@ const setLocalTabsList = (tabs: Tab[]) => {
 const createTab = (tabName: string): Tab => {
     return {
         name: tabName,
-        linksContainers: [],
+        linksContainers: [createLinkContainer("container1")],
+    };
+};
+
+const createLinkContainer = (name: string): LinksContainer => {
+    return {
+        name,
+        links: [],
     };
 };
 
@@ -47,6 +58,18 @@ interface TabState {
     setTab: (newTab:string) => void,
     createTab: (tabName:string) => void,
     removeTab: (tabName:string) => void,
+    addLinkContainer: (tabName:string, linkContainerName: string) => void,
+    removeLinkContainer: (tabName:string, linkContainerName: string) => void,
+    addLink: (
+        tabName:string,
+        linkContainerName:string,
+        link:Link
+    ) => void,
+    removeLink: (
+        tabName:string,
+        linkContainerName:string,
+        linkName:string
+    ) => void,
 }
 
 const useTab = create<TabState>((set) => ({
@@ -107,6 +130,132 @@ const useTab = create<TabState>((set) => ({
 
             setLocalTabsList(tabs);
 
+            return {
+                tabs,
+            };
+        });
+    },
+    addLinkContainer: (tabName: string, linkContainerName: string) => {
+        set((state: TabState) => {
+            const tab = state.tabs.filter(item => item.name === tabName)[0];
+            if (!tab) {
+                return {
+                    tabs: state.tabs,
+                };
+            }
+
+            state.tabs.forEach(tab => {
+                if (tab.name === tabName) {
+                    tab.linksContainers.push(createLinkContainer(linkContainerName));
+                }
+            });
+
+            const tabs = state.tabs;
+
+            setLocalTabsList(tabs);
+            return {
+                tabs,
+            };
+        });
+    },
+    removeLinkContainer: (tabName: string, linkContainerName: string) => {
+        set((state: TabState) => {
+            const tab = state.tabs.filter(item => item.name === tabName)[0];
+            if (!tab) {
+                return {
+                    tabs: state.tabs,
+                };
+            }
+
+            const tabs = [
+                ...state.tabs.filter(item => item.name !== tabName),
+                {
+                    ...tab,
+                    linksContainers:
+                        tab.linksContainers.filter((item: LinksContainer) => item.name !== linkContainerName),
+                },
+            ];
+
+            setLocalTabsList(tabs);
+            return {
+                tabs,
+            };
+        });
+    },
+    addLink: (
+        tabName: string,
+        linkContainerName: string,
+        link: Link,
+    ) => {
+        set((state: TabState) => {
+            const tab = state.tabs.filter(item => item.name === tabName)[0];
+            if (!tab) {
+                return {
+                    tabs: state.tabs,
+                };
+            }
+
+            const linkContainer =
+                tab.linksContainers.filter((item: LinksContainer) => item.name === linkContainerName)[0];
+            if (!linkContainer) {
+                return {
+                    tabs: state.tabs,
+                };
+            }
+
+            state.tabs.forEach(tab => {
+                if (tab.name === tabName) {
+                    tab.linksContainers.forEach(linkContainer => {
+                        if (linkContainer.name === linkContainerName) {
+                            linkContainer.links.push(link);
+                        }
+                    });
+                }
+            });
+
+            setLocalTabsList(state.tabs);
+
+            const tabs = state.tabs;
+
+            return {
+                tabs,
+            };
+        });
+    },
+    removeLink: (
+        tabName: string,
+        linkContainerName: string,
+        linkName: string,
+    ) => {
+        set((state: TabState) => {
+            const tab = state.tabs.filter(item => item.name === tabName)[0];
+            if (!tab) {
+                return {
+                    tabs: state.tabs,
+                };
+            }
+
+            const linkContainer =
+                tab.linksContainers.filter((item: LinksContainer) => item.name === linkContainerName)[0];
+            if (!linkContainer) {
+                return {
+                    tabs: state.tabs,
+                };
+            }
+
+            state.tabs.forEach(tab => {
+                if (tab.name === tabName) {
+                    tab.linksContainers.forEach(linkContainer => {
+                        if (linkContainer.name === linkContainerName) {
+                            linkContainer.links = linkContainer.links.filter((item: Link) => item.name !== linkName);
+                        }
+                    });
+                }
+            });
+
+            const tabs = state.tabs;
+
+            setLocalTabsList(tabs);
             return {
                 tabs,
             };

@@ -12,8 +12,8 @@ const NewTab: React.FC<NewTabProps> = () => {
 
     const onSubmit = (event: React.FormEvent) => {
         event.preventDefault();
-        // @ts-ignore
-        const tag_name_field = event.target["tag_name"];
+
+        const tag_name_field = document.getElementsByName("tag_name")[0] as HTMLInputElement;
         createTab(tag_name_field.value);
     };
 

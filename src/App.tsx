@@ -1,4 +1,4 @@
-import {Layout, LinkContainer, Modal, TabLinkContainer} from "./components";
+import {Layout, Modal, TabLinkContainer, TabPage} from "./components";
 
 
 
@@ -6,7 +6,8 @@ function App() {
     return (
         <Layout>
             <TabLinkContainer/>
-            <LinkContainer name={"main"}/>
+            <TabPage/>
+
             <Modal />
         </Layout>
     );
