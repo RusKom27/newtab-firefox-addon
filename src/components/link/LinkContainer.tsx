@@ -1,6 +1,6 @@
 import React from 'react';
 
-import styles from "./LinkContainer.module.scss";
+import styles from "./Link.module.scss";
 import {LinksContainer} from "../../types/Tab";
 import Link from "./Link.tsx";
 import AddLink from "./AddLink.tsx";
@@ -14,8 +14,8 @@ const LinkContainer: React.FC<LinkContainerProps> = ({container}) => {
     return (
         <div className={styles.container}>
             {container.links.map(
-                containerLink =>
-                    <Link key={containerLink.name} href={containerLink.link}>{containerLink.name}</Link>,
+                (containerLink, index) =>
+                    <Link key={index} container={container} link={containerLink}/>,
             )}
 
             <AddLink containerName={container.name}/>

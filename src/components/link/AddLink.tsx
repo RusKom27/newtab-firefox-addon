@@ -1,23 +1,29 @@
-import React, {useCallback} from 'react';
+import React from 'react';
 
 import styles from "./Link.module.scss";
-import {useTab} from "../../hooks";
+import AddLinkWindow from "./AddLinkWindow.tsx";
 
 interface AddLinkProps {
     containerName: string
 }
 
 const AddLink: React.FC<AddLinkProps> = ({containerName}) => {
+    const [isAddLinkWindowOpen, setAddLinkWindowOpen] = React.useState(false);
 
-    const {currentTab, addLink} = useTab();
+    const onClickHandler = () => {
+        setAddLinkWindowOpen(!isAddLinkWindowOpen);
+    };
 
-    const createLink = useCallback(() => {
-        addLink(currentTab.name, containerName, {name: "New link", link: "https://www.google.com"});
-    }, [currentTab.name, containerName, addLink]);
+    const closeAddLinkWindow = () => {
+        setAddLinkWindowOpen(false);
+    };
 
     return (
-        <div onClick={createLink} className={styles.link}>
-            +
+        <div>
+            {isAddLinkWindowOpen ?
+                <AddLinkWindow containerName={containerName} closeWindow={closeAddLinkWindow}/> :
+                <div onClick={onClickHandler} className={styles.link}>+</div>
+            }
         </div>
     );
 };

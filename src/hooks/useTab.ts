@@ -65,6 +65,12 @@ interface TabState {
         linkContainerName:string,
         link:Link
     ) => void,
+    changeLink: (
+        tabName:string,
+        linkContainerName:string,
+        link:Link,
+        newLink:Link,
+    ) => void,
     removeLink: (
         tabName:string,
         linkContainerName:string,
@@ -208,6 +214,54 @@ const useTab = create<TabState>((set) => ({
                     tab.linksContainers.forEach(linkContainer => {
                         if (linkContainer.name === linkContainerName) {
                             linkContainer.links.push(link);
+                        }
+                    });
+                }
+            });
+
+            setLocalTabsList(state.tabs);
+
+            const tabs = state.tabs;
+
+            return {
+                tabs,
+            };
+        });
+    },
+    changeLink: (
+        tabName: string,
+        linkContainerName: string,
+        link: Link,
+        newLink: Link,
+    ) => {
+        set((state: TabState) => {
+            const tab = state.tabs.filter(item => item.name === tabName)[0];
+            if (!tab) {
+                return {
+                    tabs: state.tabs,
+                };
+            }
+
+            const linkContainer =
+                tab.linksContainers.filter((item: LinksContainer) => item.name === linkContainerName)[0];
+            if (!linkContainer) {
+                return {
+                    tabs: state.tabs,
+                };
+            }
+
+            state.tabs.forEach(tab => {
+                if (tab.name === tabName) {
+                    tab.linksContainers.forEach(linkContainer => {
+                        if (linkContainer.name === linkContainerName) {
+
+                            linkContainer.links = linkContainer.links.map((item: Link) => {
+
+                                if (item.name === link.name) {
+                                    return newLink;
+                                }
+                                return item;
+                            });
                         }
                     });
                 }

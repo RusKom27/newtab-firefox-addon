@@ -1,7 +1,69 @@
 
+.linkContainer {
+  height: unset;
+}
+
 .link {
   padding: 30px 50px;
   display: flex;
+  height: 100%;
+  color: #FFF;
+  text-decoration: none;
   align-content: center;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
+  position: relative;
+  cursor: pointer;
+  background-color: rgba(0,0,0,0.5);
+  border-radius: 8px;
+  border: 0.01rem solid #171717;
+  backdrop-filter: blur(20px) invert(10%);
+  transition: 0.3s ease;
+}
+
+.linkImage {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.window {
+
+}
+
+.newLinkForm {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px;
+  border-radius: 8px;
+  background-color: rgba(240, 255, 255, 0.5);
+  backdrop-filter: blur(8px) invert(10%);
+  border: 0.01rem solid #171717;
+  width: calc(100% - 8px);
+  height: fit-content;
+  min-height: 50px;
+}
+
+.newLinkFormRow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+button {
+  cursor: pointer;
+}
+
+.container {
+  margin-inline: auto;
+  max-width: 60%;
+  max-height: 50%;
+  gap: 4px;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
 }

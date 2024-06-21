@@ -1,6 +1,7 @@
 
 
 type Link = {
+    image?: string,
     name: string,
     link: string
 }
