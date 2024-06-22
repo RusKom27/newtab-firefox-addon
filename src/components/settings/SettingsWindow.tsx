@@ -4,7 +4,6 @@ import styles from "./Settings.module.scss";
 import {useTab} from "../../hooks";
 import NewTab from "./NewTab.tsx";
 import SettingsTab from "./SettingsTab.tsx";
-import SettingsTabDropPlace from "./SettingsTabDropPlace.tsx";
 
 export interface SettingsProps {
 
@@ -15,13 +14,8 @@ const SettingsWindow: React.FC<SettingsProps> = () => {
 
     return (
         <div className={styles.window}>
-            <SettingsTabDropPlace/>
-            {tabs.map(tab => (
-                <React.Fragment key={tab.name}>
-                    <SettingsTab>{tab.name}</SettingsTab>
-                    <SettingsTabDropPlace/>
-                </React.Fragment>
-            ),
+            {tabs.map(tab =>
+                <SettingsTab>{tab.name}</SettingsTab>,
             )}
             <NewTab/>
         </div>

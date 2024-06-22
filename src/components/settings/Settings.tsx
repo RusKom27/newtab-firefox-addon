@@ -1,11 +1,11 @@
 import React, {useRef} from 'react';
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import {ReactComponent as SettingsIcon} from '../../assets/settings.svg';
+
+// import SettingsIcon from "../../assets/icons/settings.svg?react";
 
 import styles from "./Settings.module.scss";
 import useModal from "../../hooks/useModal.ts";
 import SettingsWindow from "./SettingsWindow.tsx";
+import SvgIcon from "../svg-icon/SvgIcon.tsx";
 
 export interface SettingsProps {
 
@@ -30,7 +30,7 @@ const Settings: React.FC<SettingsProps> = () => {
             ref={ref}
             className={styles.settings}
             onClick={onClickHandler}>
-            <SettingsIcon/>
+            <SvgIcon iconName={"settings"}/>
         </div>
     );
 };
