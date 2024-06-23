@@ -3,18 +3,19 @@ import React, {useState} from 'react';
 import styles from "./Settings.module.scss";
 import {useTab} from "../../hooks";
 
-export interface NewTabProps {
+export interface NewContainerProps {
 }
 
-const NewTab: React.FC<NewTabProps> = () => {
+const NewContainer: React.FC<NewContainerProps> = () => {
     const [isActive, setActive] = useState<boolean>(false);
-    const {createTab} = useTab();
+    const {addLinkContainer, currentTab} = useTab();
 
     const onSubmit = (event: React.FormEvent) => {
         event.preventDefault();
 
-        const tag_name_field = document.getElementsByName("tag_name")[0] as HTMLInputElement;
-        createTab(tag_name_field.value);
+        const container_name_field = document.getElementsByName("container_name")[0] as HTMLInputElement;
+        addLinkContainer( currentTab.name, container_name_field.value);
+
         setActive(false);
     };
 
@@ -24,7 +25,7 @@ const NewTab: React.FC<NewTabProps> = () => {
             onClick={() => setActive(true)}>
             <form onSubmit={onSubmit}>
                 {isActive ?
-                    <input name={"tag_name"} type={"text"} className={styles.newTabInput}/>
+                    <input name={"container_name"} type={"text"} className={styles.newTabInput}/>
                     :
                     "+"
                 }
@@ -33,4 +34,4 @@ const NewTab: React.FC<NewTabProps> = () => {
         </div>
     );
 };
-export default NewTab;
+export default NewContainer;

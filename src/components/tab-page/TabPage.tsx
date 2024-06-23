@@ -1,16 +1,22 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useTab} from "../../hooks";
 import {LinkContainer} from "../index.ts";
+
+import styles from "./TabPage.module.scss";
 
 export interface TabPageProps {
 
 }
 
 const TabPage: React.FC<TabPageProps> = () => {
-    const {currentTab} = useTab();
+    const {currentTab, setTab} = useTab();
+
+    useEffect(() => {
+        setTab("main");
+    }, []);
 
     return (
-        <div>
+        <div className={styles.tabPageContainer}>
             {currentTab.linksContainers.map(
                 linksContainer =>
                     <LinkContainer key={linksContainer.name} container={linksContainer}/>,

@@ -1,28 +1,7 @@
 
-.tab_link {
-  display: block;
-  padding-block: 8px;
-  text-align: center;
-  font-weight: 700;
-  font-size: 16px;
-  max-width: 200px;
-  text-transform: uppercase;
-  width: 100%;
-  border: 0.01rem solid #171717;
-  color: #171717;
-  background-color: rgba(240, 255, 255, 0.5);
-  backdrop-filter: blur(8px) invert(10%);
-  border-radius: 8px;
-  transition: 0.3s ease;
-}
-
-.tab_link_active {
-  @extend .tab_link;
-  background-color: rgb(255, 255, 255, 0.9);
-}
-
-.tab_link:hover {
-  cursor: pointer;
-  backdrop-filter: blur(60px) invert(10%);
-  background-color: rgba(240, 255, 255, 1);
+.tabPageContainer {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -70%);
 }

@@ -7,7 +7,6 @@ function App() {
         <Layout>
             <TabLinkContainer/>
             <TabPage/>
-
             <Modal />
         </Layout>
     );

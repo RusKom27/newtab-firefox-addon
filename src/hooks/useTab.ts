@@ -143,7 +143,11 @@ const useTab = create<TabState>((set) => ({
     },
     addLinkContainer: (tabName: string, linkContainerName: string) => {
         set((state: TabState) => {
+
+
+
             const tab = state.tabs.filter(item => item.name === tabName)[0];
+
             if (!tab) {
                 return {
                     tabs: state.tabs,

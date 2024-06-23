@@ -1,25 +1,24 @@
-import React, {useRef} from 'react';
+import React from 'react';
 
 import styles from "./Settings.module.scss";
-
-
+import {useTab} from "../../hooks";
 
 export interface SettingsTabProps {
     children: string
+    onClickHandlerCallback: () => void
 }
 
-const SettingsTab: React.FC<SettingsTabProps> = ({children}) => {
-    const ref = useRef<HTMLDivElement>(null);
+const SettingsTab: React.FC<SettingsTabProps> = ({children, onClickHandlerCallback}) => {
+    const {setTab} = useTab();
 
-    const handleDragStart = (event: React.DragEvent<HTMLDivElement>) => {
-        event.dataTransfer.setData('tag_name', children);
+    const onClickHandler = () => {
+        setTab(children);
+        onClickHandlerCallback();
     };
 
     return (
         <div
-            ref={ref}
-            draggable={true}
-            onDragStart={handleDragStart}
+            onClick={onClickHandler}
             className={styles.tab}
         >
             {children}
